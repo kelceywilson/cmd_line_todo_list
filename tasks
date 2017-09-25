@@ -1,0 +1,49 @@
+#!/usr/local/bin/node
+// ^^ The tasks command file should have a shebang pointing to node
+
+// Add tests using Mocha and Chai for all functions
+
+const fs = require('fs');
+// The add command is implemented in ./commands/add.js
+const add = require('./add');
+// The complete command is implemented in ./commands/complete.js
+const complete = require('./complete');
+// The delete command is implemented in ./commands/delete.js
+const del = require('./delete');
+// The list command is implemented in ./commands/list.js
+const list = require('./list');
+
+//
+const command = process.argv[2];
+const task = process.argv[3];
+let taskList;
+
+// Tasks are persisted to a json file using fs.readFileSync and fs.writeFileSync
+// Your program should create the tasks.json if the file doesn't exist
+try {
+  taskList = fs.readFileSync('taskList.json', 'utf8');
+} catch (err) {
+  if (err instanceof Error) {
+    fs.writeFileSync('taskList.json', '{"tasks": [], "completed": []}');
+  }
+}
+
+taskList = JSON.parse(taskList);
+
+switch (command) {
+  case 'add':
+    add.add(taskList, task);
+    break;
+  case 'list':
+    list.list(taskList);
+    break;
+  case 'delete':
+    del.del(taskList, task);
+    break;
+  case 'complete':
+    complete.complete(taskList, task);
+    break;
+  default:
+    // User receives an error message if they enter an invalid command
+    console.log('Missing or invalid command');
+}
