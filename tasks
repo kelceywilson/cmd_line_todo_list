@@ -12,25 +12,28 @@ const complete = require('./complete');
 const del = require('./delete');
 // The list command is implemented in ./commands/list.js
 const list = require('./list');
+const completeDelete = require('./complete_delete');
 
 //
 const command = process.argv[2];
 const task = process.argv[3];
 let taskList;
-
 // Tasks are persisted to a json file using fs.readFileSync and fs.writeFileSync
 // Your program should create the tasks.json if the file doesn't exist
 try {
-  taskList = fs.readFileSync('taskList.json', 'utf8');
+  taskList = fs.readFileSync('./taskList.json', 'utf8');
 } catch (err) {
   if (err instanceof Error) {
-    fs.writeFileSync('taskList.json', '{"tasks": [], "completed": []}');
+    fs.writeFileSync('./taskList.json', '{"tasks": [], "completed": []}');
   }
 }
-
+// now that it exists, assign it to tasklist again
+taskList = fs.readFileSync('./taskList.json', 'utf8');
+// now parse it to make readable to my functions
 taskList = JSON.parse(taskList);
 
 switch (command) {
+  // console.log(command);
   case 'add':
     add.add(taskList, task);
     break;
@@ -42,6 +45,9 @@ switch (command) {
     break;
   case 'complete':
     complete.complete(taskList, task);
+    break;
+  case 'completeDelete':
+    completeDelete.completeDelete(taskList, task);
     break;
   default:
     // User receives an error message if they enter an invalid command
