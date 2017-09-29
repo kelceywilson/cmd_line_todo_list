@@ -119,38 +119,3 @@ describe('comp()', () => {
     });
   });
 });
-
-
-// it('displays success message when task completed', (done) => {
-//   exec(`./tasks complete ${taskList.tasks.length}`, (err, stdout, stderr) => {
-//     expect(stdout).to.include('Completed task');
-//     done();
-//   });
-// });
-
-// it('displays error for missing or invalid id', (done) => {
-//   exec('./tasks delete', (err, stdout, stderr) => {
-//     expect(stdout).to.include('Missing or invalid id');
-//     done();
-//   });
-// });
-//   context('no tasks exist', () => {
-//     beforeEach(() => {
-//       fs.unlinkSync(taskFile);
-//       initializeFile();
-//     });
-//     it('should add a task', () => {
-//       add('new task');
-//       const tasks = readFromFile();
-//       expect(tasks.length).to.equal(1);
-//     });
-//     it('should display confirmation message', () => {
-//
-//     });
-//   });
-// });
-
-
-// expect(add).to.be.a('function')
-// expect(add('a task')).to.be.an('undefined')
-// });
