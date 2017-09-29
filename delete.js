@@ -1,17 +1,16 @@
-const fs = require('fs');
+const { readFromFile, writeToFile } = require('./fileio');
 
-const del = (taskList, taskNumber) => {
-  if (taskNumber !== undefined) {
-    if (taskNumber < taskList.tasks.length) {
-      const deleted = taskList.tasks[taskNumber - 1];
-      taskList.tasks.splice(taskNumber - 1, 1);
-      fs.writeFileSync('taskList.json', JSON.stringify(taskList));
-      console.log(`Deleted task ${taskNumber}: ${deleted}`);
-    } else {
-      console.log('Missing or invalid id');
-    }
-  } else {
+const del = (taskNumber) => {
+  const taskList = readFromFile();
+  const taskListLength = taskList.tasks.length;
+  console.log(taskNumber);
+  if (parseInt(taskNumber) < 1 || parseInt(taskNumber) > taskListLength || taskNumber === NaN) {
     console.log('Missing or invalid id');
+  } else {
+    const deleted = taskList.tasks[taskNumber - 1];
+    taskList.tasks.splice(taskNumber - 1, 1);
+    writeToFile(taskList);
+    console.log(`Deleted task ${taskNumber}: ${deleted}`);
   }
 };
 

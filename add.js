@@ -1,9 +1,11 @@
-const fs = require('fs');
+const { readFromFile, writeToFile } = require('./fileio');
 
-const add = (taskList, newTask) => {
-  if (newTask !== undefined) {
+const add = (newTask) => {
+  console.log(newTask);
+  if (newTask !== '') {
+    const taskList = readFromFile();
     taskList.tasks.push(newTask);
-    fs.writeFileSync('taskList.json', JSON.stringify(taskList));
+    writeToFile(taskList);
     console.log(`Created task ${taskList.tasks.length}`);
   } else {
     console.log('Missing task');

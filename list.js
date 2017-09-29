@@ -1,4 +1,8 @@
-const list = (taskList) => {
+const { readFromFile } = require('./fileio');
+
+const taskList = readFromFile();
+
+const list = () => {
   let idNumber = 1;
   console.log('\nID Description');
   console.log('-- -----------');
