@@ -12,6 +12,20 @@ const {
   taskFile,
 } = require('./fileio');
 
+// bds: general note on tests for this benchmark: it's better for the functions
+// bds: in add, list, delete, etc to *return* a string, and then for the tasks
+// bds: file to console.log that string
+// bds: This way you can test the function output of, say, add independently of
+// bds: testing the tasks file
+
+// bds: also: you should be resetting the test file *every* test, and then
+// bds: setting up only what you need for the test in that file.
+// bds: Tests should not rely on previous tests to populate the test file.
+// bds: What if the test populating the test file fails? Then the following test
+// bds: would fail as well. Tests need to be independent.
+// bds: Make heavy use of before() and beforeEach()
+
+
 // run tests by running npm test on the command line
 
 // sanity check
@@ -21,6 +35,8 @@ describe('Mocha sanity test', () => {
   });
 });
 
+
+// bds: this section's great :-)
 // test suite covering missing or invalid commands
 describe('error message for missing or invalid commands', () => {
   // test specs (unit tests)
@@ -38,6 +54,13 @@ describe('error message for missing or invalid commands', () => {
     });
   });
 });
+
+
+// bds: more tests! Does it give the task the right task number?
+// bds: does the task file have the right number of tasks if you add
+// bds: when it's empty? Does it have the right number of tasks if you
+// bds: add when it has a task? Does the task get the right task number
+// bds: if you add after having deleted? After having completed?
 
 // test suite covering functions
 describe('add()', () => {
@@ -58,6 +81,9 @@ describe('add()', () => {
   });
 });
 
+// bds: more tests! What if the list is empty? Does it do the right thing after
+// bds: deleting? After completing? And here, you're not testing
+// bds: whether the output actually contains the expected tasks.
 describe('list()', () => {
   it('is a function', () => {
     expect(list).to.be.a('function');
@@ -70,6 +96,7 @@ describe('list()', () => {
   });
 });
 
+// bds: what other tests could you do here?
 describe('del()', () => {
   let taskList;
   beforeEach((done) => {
@@ -93,6 +120,7 @@ describe('del()', () => {
   });
 });
 
+// bds: what other tests could you do here? 
 describe('comp()', () => {
   let taskList;
   before((done) => {

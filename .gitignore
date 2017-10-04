@@ -1,3 +1,6 @@
+# bds: you could replace the two .json lines with
+# *taskList.json (the * means anything or nothing. ;-) )
+
 node_modules
 taskList.json
 testTaskList.json

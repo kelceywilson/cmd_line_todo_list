@@ -14,11 +14,13 @@ const createFileIfNeeded = () => {
   try {
     readFromFile();
   } catch (err) {
+    // bds: What are you checking for here? When will err not be an instanceof Error?
     if (err instanceof Error) {
       initializeFile();
     }
   }
 };
+
 createFileIfNeeded();
 
 module.exports = {
