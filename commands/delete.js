@@ -1,12 +1,11 @@
-const { readFromFile, writeToFile } = require('./fileio');
+const { readFromFile, writeToFile } = require('../fileio');
 
 const del = (taskNumber) => {
   const taskList = readFromFile();
   const taskListLength = taskList.tasks.length;
   console.log(taskNumber);
-  if (parseInt(taskNumber) < 1 || parseInt(taskNumber) > taskListLength || taskNumber === NaN) {
-    console.log('Missing or invalid id');
-  } else {
+  if (parseInt(taskNumber, taskListLength) > taskListLength || parseInt(taskNumber) < 1){
+
     // bds: which way do you like better of harvesting the deleted / completed task?
     // bds: this way, or the way you used in complete.js? It's better to choose
     // bds: one and be consistent. Even better: make a file with helper functions
@@ -18,7 +17,9 @@ const del = (taskNumber) => {
     taskList.tasks.splice(taskNumber - 1, 1);
     writeToFile(taskList);
     console.log(`Deleted task ${taskNumber}: ${deleted}`);
+  } else {
+    console.log('  No task by that number exists');    
   }
 };
 
-module.exports.del = del;
+module.exports = del;

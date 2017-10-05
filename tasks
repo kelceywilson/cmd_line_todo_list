@@ -3,44 +3,38 @@
 // shebang tells you what interpreter to use to run the file
 // could also be #!/usr/bin/env node
 
-// bds: this is probably over-commented; each require line doesn't need a comment
-// bds: And, the comments are incorrect! The command files aren't in a separate
-// bds: directory named commands, as specified in the spec. Why not?
-
-// The add command is implemented in ./commands/add.js
-const add = require('./add');
-// The complete command is implemented in ./commands/complete.js
-const comp = require('./complete');
-// The delete command is implemented in ./commands/delete.js
-const del = require('./delete');
-// The list command is implemented in ./commands/list.js
-const list = require('./list');
+// The following four commands are located in the ./commands/ directory
+const add = require('./commands/add');
+const comp = require('./commands/complete');
+const del = require('./commands/delete');
+const list = require('./commands/list');
 // assign task instructions to command and task
 const command = process.argv[2];
 // instead of 'const task = process.argv[3]' -- take all input from 3 on
 const task = process.argv.slice(3).join(' ');
 
-// bds: what if someone gives an
-// bds: add/delete/complete command without anything after it? Here would
-// bds: be the best place to handle that
-switch (command) {
-  case 'add':
-    // bds: since you're only exporting one thing, you should just make the
-    // bds: module.exports = add, rather than making an object. This will make
-    // bds: this line of code cleaner -- add(task), rather than add.add(task)
-    add.add(task);
-    break;
-  case 'list':
-    list.list();
-    break;
-  case 'delete':
-    del.del(task);
-    break;
-  case 'complete':
-    comp.comp(task);
-    break;
-  default:
-    // User receives an error message if they enter an invalid command
-    // bds: it would be nice to include a usage here.
-    console.log('Missing or invalid command');
+if (command !== undefined) {
+  if (command === 'list') {
+    list();
+  } else if (task !== '') {
+    switch (command) {
+      case 'add':
+        add(task);
+        break;
+      case 'delete':
+        del(task);
+        break;
+      case 'complete':
+        comp(task);
+        break;
+      default:
+        console.log('  Invalid command- options are "add", "delete", "complete", and "list"');
+    }
+  } else {
+    console.log('  Missing task or task number');
+    console.log('  - "add" should be followed by a task description');
+    console.log('  - "delete" and "complete" should be followed by a task number');
+  }
+} else {
+  console.log('  Missing command - options are "add", "delete", "complete", and "list"');
 }
